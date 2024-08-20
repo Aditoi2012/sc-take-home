@@ -29,7 +29,13 @@ func GetAllFolders(req *FetchFolderRequest) (*FetchFolderResponse, error) {
 }
 
 // this functions grabs the folders' pointers given the orgId that is sent
-func FetchAllFoldersByOrgID(orgID uuid.UUID) ([]*Folder, error) {
+// edit: i have changed it to var so that i can use unit tests instead
+var FetchAllFoldersByOrgID = func(orgID uuid.UUID) ([]*Folder, error) {
+	
+	if(orgID == uuid.Nil){
+		return nil, errors.New("invalid OrgID")
+	}
+	
 	folders := GetSampleData()
 
 	resFolders := []*Folder{}
